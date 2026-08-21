@@ -324,6 +324,49 @@ a.btn{text-decoration:none;text-align:center}
   .ctl dt,.mast .h1cn{color:#444}
   .secs,.sheet,.rc{border-color:#999}
 }
+/* ============ data collection notice ============ */
+.pdpa{
+  margin:0 0 4px;padding:13px 15px;background:var(--sheet3);
+  border-left:3px solid var(--bronze);font-size:13.5px;line-height:1.65;color:var(--ink2);
+}
+.pdpa b{color:var(--ink);font-weight:600}
+.pdpa .zh{display:block;font-family:var(--cjk);font-size:12.5px;color:var(--ink3);margin-top:5px}
+
+/* ============ handwritten signature ============ */
+.sigpad{margin-top:20px;padding-top:18px;border-top:1px solid var(--rule)}
+.spw{
+  position:relative;margin-top:10px;border:1px solid var(--rule2);background:var(--sheet2);
+  touch-action:none;overflow:hidden;
+}
+.spw canvas{display:block;width:100%;height:180px;touch-action:none;cursor:crosshair}
+.sp-base{position:absolute;left:24px;right:24px;bottom:42px;border-bottom:1px dashed var(--rule3);pointer-events:none}
+.sp-ph{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-size:12.5px;color:var(--ink3);pointer-events:none}
+.sp-ph .cn{font-family:var(--cjk);margin-left:6px}
+.spw[data-ink="1"] .sp-ph,.spw[data-ink="1"] .sp-base{display:none}
+.f[data-err="1"] .spw{border-color:var(--stop);background:#FCF0F0}
+.sp-bar{display:flex;justify-content:flex-end;margin-top:8px}
+.sp-clr{
+  padding:8px 15px;border:1px solid var(--rule2);background:#fff;color:var(--ink2);
+  font:inherit;font-size:13px;cursor:pointer;
+}
+.sp-clr .cn{font-family:var(--cjk);margin-left:5px}
+.sp-clr:active{background:var(--sheet3)}
+
+/* ============ submission status ============ */
+.subst{
+  display:none;margin-top:16px;padding:12px 14px;font-size:13.5px;line-height:1.6;
+  border-left:3px solid var(--rule2);background:var(--sheet3);color:var(--ink2);
+}
+.subst[data-on="1"]{display:block}
+.subst .cn{display:block;font-family:var(--cjk);font-size:12.5px;margin-top:3px}
+.subst[data-state="sending"]{border-left-color:var(--navy);background:var(--navy-t);color:var(--navy)}
+.subst[data-state="ok"]{border-left-color:var(--seal);background:var(--seal-s);color:var(--seal)}
+.subst[data-state="fail"]{border-left-color:var(--stop);background:#FCF0F0;color:var(--stop)}
+.subrt{
+  display:inline-block;margin-top:10px;padding:9px 16px;border:1px solid currentColor;
+  background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:600;cursor:pointer;
+}
+
 </style>
 
 <section class="splash" id="splash" role="dialog" aria-modal="true" aria-labelledby="spH1">
@@ -413,6 +456,10 @@ a.btn{text-decoration:none;text-align:center}
 
   <section class="sheet" id="partA">
     <div class="fw">
+      <div class="pdpa">
+        <b>What the Company records.</b> Your name, contact number, FIN or work permit number, handwritten signature, and which sections you confirmed are sent to JIA AN Construction Pte. Ltd. and stored on a server in Singapore. They are kept as the Company's record that this document was issued to you and acknowledged by you, and are used for no other purpose. They are not shared with anyone outside the Company except where the law or a main contractor's site requirements oblige us to produce them. To ask what is held about you, or to correct it, contact the Company at 8546 1360.
+        <span class="zh cn"><b>公司会记录什么。</b>你的姓名、联系电话、FIN／工准证号、手写签名，以及你确认了哪些章节，会发送给嘉安建筑并保存在新加坡的服务器上。这些资料仅用于证明公司已向你发出本文件、你已确认，不作其他用途，也不会提供给公司以外的任何人——除非法律或总承包商的工地规定要求我们出示。如需查询或更正公司持有的你的资料，请联系公司 8546 1360。</span>
+      </div>
       <div class="f" id="f-name">
         <label for="i-name">Full name as per work permit<span class="lcn cn">姓名（与工准证一致）</span></label>
         <input id="i-name" type="text" autocomplete="name" enterkeyhint="next" placeholder="Enter your full name">
@@ -477,6 +524,17 @@ a.btn{text-decoration:none;text-align:center}
           <span class="zh cn">输入姓名即构成电子签署。系统将连同签署日期时间及本文件版本号一并记录。</span></div>
       </div>
 
+      <div class="f sigpad" id="f-sigpad">
+        <label>Handwritten signature<span class="lcn cn">手写签名 — 请用手指在框内签名</span></label>
+        <div class="spw" id="spw">
+          <canvas id="spc"></canvas>
+          <div class="sp-base"></div>
+          <div class="sp-ph">Sign here<span class="cn">在此签名</span></div>
+        </div>
+        <div class="sp-bar"><button class="sp-clr" id="spClr" type="button">Clear<span class="cn">重签</span></button></div>
+        <div class="e">A handwritten signature is required. <span class="cn">请先手写签名。</span></div>
+      </div>
+
       <label class="ack" style="display:flex;margin-top:18px" for="i-final">
         <input id="i-final" type="checkbox">
         <span class="t">I have read and understood all sections of this document.
@@ -506,6 +564,8 @@ a.btn{text-decoration:none;text-align:center}
       <div class="rc-f">Retain a copy of this receipt. A copy must also be returned to the Company for its records.
         <span class="zh cn">请自行留存一份，并将一份交回公司存档。</span></div>
     </div>
+
+    <div class="subst" id="subMsg"></div>
 
     <div class="next">
       <h3>Send this receipt to the Company <span class="cn">把回执发回公司</span></h3>
@@ -544,6 +604,22 @@ a.btn{text-decoration:none;text-align:center}
 <script>
 (function(){
 "use strict";
+
+/* ============================================================
+   Company system (Supabase) — optional.
+   Leave url/anonKey empty and the page behaves exactly as before:
+   nothing leaves the phone except what the operator shares.
+   Only the anon / publishable key belongs here. NEVER the
+   service_role key — this file is served publicly.
+   ============================================================ */
+var SUPABASE = {
+  url:     "https://zxlvalphrprdiyegwcvm.supabase.co",
+  anonKey: "sb_publishable_4EG7jXMOvcnGfVAkbxkrWQ_p3sw1-cv",
+  table:   "safety_acknowledgements",
+  bucket:  "signatures"
+};
+var BACKEND = !!(SUPABASE.url && SUPABASE.anonKey);
+
 
 var SECTIONS = [
 {
@@ -771,15 +847,251 @@ function clockSG(){
   return d.toLocaleString("en-GB",{timeZone:"Asia/Singapore",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false});
 }
 function dur(ms){var s=Math.round(ms/1000);return s<60?s+" s":Math.floor(s/60)+" min "+pad(s%60)+" s";}
-/* Document reference for filing. Derived on this device from the operator's
-   particulars and the moment of signing; it is a filing handle, not a security token. */
-function ackRef(p, when){
-  var seed = (p.name+"|"+p.tel+"|"+p.fin+"|"+when);
-  var hA = 0x811c9dc5;
-  for (var i=0;i<seed.length;i++){ hA ^= seed.charCodeAt(i); hA = (hA * 0x01000193) >>> 0; }
+/* Document reference for filing. Random rather than hashed from the operator's
+   particulars: a hash of name+phone+FIN is a fingerprint of the operator, and
+   16 bits collided often enough to lose a record to the database unique key.
+   It is a filing handle, not a security token. */
+function ackRef(){
+  var n = new Uint8Array(3);
+  if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(n);
+  else for (var i=0;i<3;i++) n[i] = Math.floor(Math.random()*256);
   var d = new Date();
   var iso = d.toLocaleString("en-CA",{timeZone:"Asia/Singapore",year:"numeric",month:"2-digit",day:"2-digit"}).slice(0,10).replace(/-/g,"");
-  return "JAC-ACK-" + iso + "-" + ("0000"+(hA % 65536).toString(16).toUpperCase()).slice(-4);
+  var hex = Array.prototype.map.call(n, function(b){ return ("0"+b.toString(16)).slice(-2); }).join("").toUpperCase();
+  return "JAC-ACK-" + iso + "-" + hex;
+}
+
+/* SHA-256 of the exact clause text shown on this page, so a receipt can later
+   be tied to the wording of this revision rather than just its version number. */
+function documentText(){
+  var L = ["JAC-CR-SAF-001|Rev. 01|2026-09-01"];
+  DOCS.forEach(function(d){ L.push(d.code+"|"+d.rev+"|"+d.name); });
+  SECTIONS.forEach(function(S, i){
+    L.push((i+1)+"|"+S.en+"|"+S.cn);
+    S.cl.forEach(function(c){
+      L.push(c.n+"|"+c.en+"|"+c.zh);
+      (c.li||[]).forEach(function(x){ L.push(c.n+"-|"+x.en+"|"+x.zh); });
+      if (c.emph) L.push(c.n+"!|"+c.emph.en+"|"+c.emph.zh);
+    });
+  });
+  return L.join("\n");
+}
+var DOC_HASH = null;
+(function(){
+  try{
+    if (!window.crypto || !crypto.subtle || !window.TextEncoder) return;
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(documentText()))
+      .then(function(buf){
+        DOC_HASH = Array.prototype.map.call(new Uint8Array(buf), function(b){
+          return ("0"+b.toString(16)).slice(-2);
+        }).join("");
+      }, function(){});
+  }catch(e){}
+})();
+
+/* ---------- handwritten signature pad ---------- */
+var SIGPAD = (function(){
+  var wrap = document.getElementById("spw");
+  var cv   = document.getElementById("spc");
+  if (!wrap || !cv || !cv.getContext){
+    return {hasInk:function(){return true;}, reset:function(){}, trimmed:function(){return null;},
+            toBlob:function(){return Promise.resolve(null);}};
+  }
+  var ctx, ink = false, drawing = false, last = null, dpr = 1;
+  var bb = null;                                    /* ink bounding box, CSS px */
+  var INK = "#12305B";
+
+  function fit(keep){
+    var prev = (keep && ink && cv.width) ? cv.toDataURL("image/png") : null;
+    var pw = cv.width, ph = cv.height;
+    dpr = Math.min(window.devicePixelRatio || 1, 3);
+    var w = Math.max(cv.clientWidth, 1), h = Math.max(cv.clientHeight, 1);
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    ctx = cv.getContext("2d");
+    ctx.scale(dpr, dpr);
+    ctx.lineWidth = 2.4; ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.strokeStyle = INK; ctx.fillStyle = INK;
+    if (prev){
+      var im = new Image();
+      im.onload = function(){ try{ ctx.drawImage(im, 0, 0, w, h); }catch(e){} };
+      im.src = prev;
+    }
+  }
+
+  function pos(e){
+    var r = cv.getBoundingClientRect();
+    return {x: e.clientX - r.left, y: e.clientY - r.top};
+  }
+  function grow(p){
+    if (!bb) bb = {x0:p.x, y0:p.y, x1:p.x, y1:p.y};
+    else {
+      if (p.x < bb.x0) bb.x0 = p.x; if (p.x > bb.x1) bb.x1 = p.x;
+      if (p.y < bb.y0) bb.y0 = p.y; if (p.y > bb.y1) bb.y1 = p.y;
+    }
+    if (!ink){ ink = true; wrap.dataset.ink = "1"; }
+    checkSign();
+  }
+  function down(e){
+    if (e.preventDefault) e.preventDefault();
+    drawing = true; last = pos(e);
+    ctx.beginPath(); ctx.arc(last.x, last.y, 1.2, 0, Math.PI*2); ctx.fill();
+    grow(last);
+  }
+  function move(e){
+    if (!drawing) return;
+    if (e.preventDefault) e.preventDefault();
+    var p = pos(e);
+    ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+    last = p; grow(p);
+  }
+  function up(){ drawing = false; last = null; }
+
+  if (window.PointerEvent){
+    cv.addEventListener("pointerdown", down);
+    cv.addEventListener("pointermove", move);
+    cv.addEventListener("pointerup", up);
+    cv.addEventListener("pointercancel", up);
+    cv.addEventListener("pointerleave", up);
+  } else {
+    cv.addEventListener("mousedown", down);
+    cv.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+    cv.addEventListener("touchstart", function(e){ e.preventDefault(); down(e.changedTouches[0]); }, {passive:false});
+    cv.addEventListener("touchmove",  function(e){ e.preventDefault(); move(e.changedTouches[0]); }, {passive:false});
+    cv.addEventListener("touchend",   function(e){ e.preventDefault(); up(); }, {passive:false});
+  }
+
+  function reset(){
+    if (ctx) ctx.clearRect(0, 0, cv.width, cv.height);
+    ink = false; bb = null; drawing = false; last = null;
+    wrap.dataset.ink = "";
+    checkSign();
+  }
+  bindTap(document.getElementById("spClr"), reset);
+
+  /* Crop to the strokes themselves. The pad is mostly empty space, and an
+     untrimmed signature reads as a speck on the receipt. */
+  function trimmed(){
+    if (!ink || !bb) return null;
+    var m = 10;
+    var x0 = Math.max(0, (bb.x0 - m)) * dpr, y0 = Math.max(0, (bb.y0 - m)) * dpr;
+    var x1 = Math.min(cv.clientWidth,  bb.x1 + m) * dpr;
+    var y1 = Math.min(cv.clientHeight, bb.y1 + m) * dpr;
+    var w = Math.max(1, Math.round(x1 - x0)), h = Math.max(1, Math.round(y1 - y0));
+    var out = document.createElement("canvas");
+    out.width = w; out.height = h;
+    var o = out.getContext("2d");
+    o.fillStyle = "#FFFFFF"; o.fillRect(0, 0, w, h);
+    o.drawImage(cv, Math.round(x0), Math.round(y0), w, h, 0, 0, w, h);
+    return out;
+  }
+  function toBlob(){
+    return new Promise(function(res){
+      var out = trimmed();
+      if (!out || !out.toBlob) return res(null);
+      out.toBlob(function(b){ res(b || null); }, "image/png");
+    });
+  }
+
+  fit(false);
+  var rt = null;
+  window.addEventListener("resize", function(){
+    clearTimeout(rt); rt = setTimeout(function(){ fit(true); }, 180);
+  });
+
+  return {hasInk:function(){ return ink; }, reset:reset, trimmed:trimmed, toBlob:toBlob};
+})();
+
+/* ---------- submission to the Company system ---------- */
+var SUB = {state:"idle"};
+
+function subSay(state, en, zh){
+  SUB.state = state;
+  var el = document.getElementById("subMsg");
+  if (!el) return;
+  el.dataset.on = "1"; el.dataset.state = state;
+  el.textContent = "";
+  var t = document.createElement("span");
+  t.appendChild(document.createTextNode(en));
+  var c = document.createElement("span");
+  c.className = "cn"; c.appendChild(document.createTextNode(zh));
+  t.appendChild(c);
+  el.appendChild(t);
+  if (state === "fail"){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "subrt"; b.id = "subRetry";
+    b.appendChild(document.createTextNode("Retry 重试"));
+    el.appendChild(b);
+    bindTap(b, function(){ submitAck(); });
+  }
+}
+
+function sbFetch(path, opts){
+  opts = opts || {};
+  opts.headers = opts.headers || {};
+  opts.headers["apikey"] = SUPABASE.anonKey;
+  opts.headers["Authorization"] = "Bearer " + SUPABASE.anonKey;
+  return fetch(SUPABASE.url.replace(/\/+$/, "") + path, opts);
+}
+
+/* Full FIN / work permit number, normalised. Anything that would fail the
+   database check is sent as null rather than failing the whole submission:
+   the FIN is optional, the acknowledgement record is not. */
+function finClean(v){
+  var s = String(v || "").toUpperCase().replace(/[^0-9A-Z]/g, "");
+  return /^[0-9A-Z]{1,32}$/.test(s) ? s : null;
+}
+
+/* Never blocks the receipt. A failed submission leaves the operator with a
+   valid receipt and an explicit warning that the Company has NOT received it,
+   which is the mistake this screen exists to prevent. */
+function submitAck(){
+  if (!BACKEND || !RECEIPT) return;
+  if (SUB.state === "sending" || SUB.state === "ok") return;
+  subSay("sending", "Submitting to the Company system…", "正在提交到公司系统…");
+
+  var p = particulars, path = "ack/" + RECEIPT.ref + ".png";
+
+  SIGPAD.toBlob().then(function(blob){
+    if (!blob) return null;
+    return sbFetch("/storage/v1/object/" + SUPABASE.bucket + "/" + path, {
+      method: "POST",
+      headers: {"Content-Type":"image/png", "x-upsert":"false", "cache-control":"3600"},
+      body: blob
+    }).then(function(r){ return r.ok ? path : null; }, function(){ return null; });
+  }).then(function(sigPath){
+    var row = {
+      confirmation_id: RECEIPT.ref,
+      employee_name:   p.name,
+      fin:             finClean(p.fin),
+      phone:           p.tel,
+      document_code:   "JAC-CR-SAF-001",
+      revision:        "Rev. 01",
+      effective_date:  "2026-09-01",
+      signed_at:       RECEIPT.iso,
+      signature_path:  sigPath,
+      document_hash:   DOC_HASH,
+      reading_seconds: RECEIPT.secs
+    };
+    for (var i = 1; i <= 8; i++) row["section_" + i + "_confirmed"] = !!(st[i] && st[i].done);
+    return sbFetch("/rest/v1/" + SUPABASE.table, {
+      method: "POST",
+      headers: {"Content-Type":"application/json", "Prefer":"return=minimal"},
+      body: JSON.stringify(row)
+    }).then(function(r){
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      subSay("ok",
+        "Received by the Company. Reference " + RECEIPT.ref + ".",
+        "公司系统已收到，编号 " + RECEIPT.ref + "。建议仍把回执发回公司留底。");
+      if (!sigPath) subSay("ok",
+        "Received by the Company, but the signature image did not upload. Reference " + RECEIPT.ref + ".",
+        "公司系统已收到，但签名图片未能上传，编号 " + RECEIPT.ref + "。请把下方回执发回公司。");
+    });
+  }).catch(function(){
+    subSay("fail",
+      "Could not reach the Company system — usually the site signal. Your receipt below is still valid: please send it to the Company.",
+      "无法连接公司系统（多半是工地信号）。下方回执依然有效，请务必发回公司。");
+  });
 }
 
 /* ---------- build sections ---------- */
@@ -1002,9 +1314,14 @@ var btn = document.getElementById("btnSign");
 
 function allDone(){ var n=0; for(var k in st){ if(st[k].done) n++; } return n===TOTAL; }
 function checkSign(){
-  var ok = allDone() && fin.checked && particulars &&
-           sig.value.trim().toLowerCase() === particulars.name.trim().toLowerCase();
+  var named = !!(particulars && sig.value.trim().toLowerCase() === particulars.name.trim().toLowerCase());
+  var drawn = SIGPAD.hasInk();
+  var ok = allDone() && fin.checked && named && drawn;
   btn.disabled = !ok;
+  /* Flag the empty pad only once everything else is done, so the operator can
+     see why the button is still grey. */
+  var fp = document.getElementById("f-sigpad");
+  if (fp) fp.dataset.err = (allDone() && fin.checked && named && !drawn) ? "1" : "";
   return ok;
 }
 sig.addEventListener("input", function(){
@@ -1044,6 +1361,7 @@ bindTap(btn, function(){
   if (!checkSign()) return;
   var now = stampSG(), p = particulars, total = 0;
   for (var k in st) total += st[k].ms;
+  var ref = ackRef(), signedBy = sig.value.trim();
 
   var secRows = SECTIONS.map(function(S, idx){
     var i = idx + 1;
@@ -1051,17 +1369,20 @@ bindTap(btn, function(){
   });
 
   RECEIPT = {
-    ref: ackRef(p, now),
+    ref: ref,
     when: now,
+    iso: new Date().toISOString(),
+    secs: Math.round(total/1000),
+    signedBy: signedBy,
     groups: [
-      {t:"Reference", rows:[["Acknowledgement no.", ackRef(p, now)]]},
+      {t:"Reference", rows:[["Acknowledgement no.", ref]]},
       {t:"Operator",  rows:[["Name", p.name], ["Contact number", p.tel],
                             ["FIN / work permit", p.fin || "Not stated"]]},
       {t:"Documents acknowledged",
        rows: DOCS.map(function(d){ return [d.code + " " + d.rev, d.name]; })
                  .concat([["Effective date", "01 September 2026"]])},
       {t:"Sections confirmed", rows: secRows},
-      {t:"Execution", rows:[["Signed by", sig.value.trim()],
+      {t:"Execution", rows:[["Signed by", signedBy],
                             ["Declaration", "Accepted"],
                             ["Date and time", now + " SGT"],
                             ["Total reading time", dur(total)]]}
@@ -1078,6 +1399,7 @@ bindTap(btn, function(){
 
   document.getElementById("rcpt").dataset.on = "1";
   document.getElementById("partC").classList.add("locked");
+  submitAck();
   setTimeout(function(){ goTo(document.getElementById("rcpt")); }, 90);
 });
 
@@ -1103,7 +1425,7 @@ function receiptImage(){
     var W = 1000, PAD = 64, y = 0;
     var lines = 0;
     RECEIPT.groups.forEach(function(g){ lines += g.rows.length; });
-    var H = 560 + RECEIPT.groups.length * 92 + lines * 46 + 200;
+    var H = 560 + RECEIPT.groups.length * 92 + lines * 46 + 200 + (SIGPAD.hasInk() ? 320 : 0);
 
     var c = document.createElement("canvas");
     c.width = W; c.height = H;
@@ -1149,6 +1471,23 @@ function receiptImage(){
         });
         y += 40;
       });
+
+      var sg = SIGPAD.trimmed();
+      if (sg && sg.width){
+        y -= 12;
+        txt("SIGNATURE", PAD, '600 19px '+SAN, "#8A6D2F"); y += 16;
+        x.strokeStyle = "#D8DDE3"; x.lineWidth = 1;
+        x.beginPath(); x.moveTo(PAD, y); x.lineTo(W-PAD, y); x.stroke(); y += 26;
+        var s = Math.min((W - PAD*2) / sg.width, 190 / sg.height);
+        var dw = Math.round(sg.width * s), dh = Math.round(sg.height * s);
+        x.drawImage(sg, PAD, y, dw, dh);
+        y += dh + 8;
+        x.strokeStyle = "#8E9AA6"; x.lineWidth = 1;
+        x.beginPath(); x.moveTo(PAD, y); x.lineTo(PAD + Math.max(dw, 380), y); x.stroke();
+        y += 30;
+        txt(RECEIPT.signedBy, PAD, '400 21px '+SAN, "#4B545D");
+        y += 52;
+      }
 
       y -= 12;
       x.strokeStyle = "#D8DDE3"; x.lineWidth = 1;
