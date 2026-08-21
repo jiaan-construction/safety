@@ -75,3 +75,10 @@ JIA AN Construction Pte. Ltd. 塔吊司机线上安全须知与确认系统 V1.1
 - System: V1.1（2026-08-21：手写签名 + 记录自动落库 + 收集告知）
 - Document: `JAC-CR-SAF-001 Rev. 01`
 - Publisher: JIA AN Construction Pte. Ltd.
+
+---
+
+JIA AN CONSTRUCTION PTE. LTD. · UEN 202204260G · Singapore
+Website: https://jiaanconstruction.com/
+
+Other public repositories: [safety](https://github.com/jiaan-construction/safety) · [company-sops](https://github.com/jiaan-construction/company-sops) · [brand-assets](https://github.com/jiaan-construction/brand-assets)
