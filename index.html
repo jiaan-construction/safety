@@ -14,7 +14,12 @@
   --rule:#D8DDE3; --rule2:#BAC3CC; --rule3:#8E9AA6;
   --ink:#191C20; --ink2:#4B545D; --ink3:#79828B;
   --navy:#12305B; --navy2:#0B1F3D; --navy-t:#E7EDF5; --navy-l:#A9BDD6;
-  --bronze:#8A6D2F; --bronze-l:#D9C89C; --bronze-s:#F7F2E6;
+  /* ── 文件族标识 · JIA AN 文件视觉系统第 1 条 ──────────────────
+     藏青骨架全公司统一；不同文件族靠「族色 + 中英族名 + 开屏底色偏移」三重编码区分。
+     暖色 = Safety 安全（古铜 #8A6D2F）  冷色 = Personnel 人事（青蓝 #1C6E80）
+     语义色独立于族色，任何族都不得占用：墨绿 = 完成/通过，正红 = 禁止/缺失/错误。
+     本文件所属族：SAFETY 安全。换族只需改下面四个值。 */
+  --fam:#8A6D2F; --fam-l:#D9C89C; --fam-s:#F7F2E6; --fam-ground:#0B1F3D;
   --seal:#1E5A3C; --seal-s:#E7F1EB; --seal-l:#A6C9B6;
   --stop:#8C2020;
   --serif:ui-serif,"New York",Georgia,"Songti SC","Times New Roman",serif;
@@ -33,7 +38,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance}
 
 /* ============ splash ============ */
 .splash{
-  position:fixed;inset:0;z-index:100;background:var(--navy2);
+  position:fixed;inset:0;z-index:100;background:var(--fam-ground);
   overflow-y:auto;-webkit-overflow-scrolling:touch;
 }
 .splash[hidden]{display:none}
@@ -44,12 +49,12 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance}
 .sp-badge{
   width:96px;height:96px;border-radius:50%;background:#fff;margin:0 auto;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 6px 24px rgba(0,0,0,.28);
+  box-shadow:0 0 0 3px var(--fam-l),0 6px 26px rgba(0,0,0,.32);
 }
 .sp-badge img{width:60px;height:auto;display:block}
 .sp-eyebrow{
   margin-top:26px;text-align:center;font-size:11.5px;font-weight:600;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--bronze-l);
+  letter-spacing:.24em;text-transform:uppercase;color:var(--fam-l);
 }
 .sp-h1{
   margin:16px 0 0;text-align:center;font-family:var(--serif);
@@ -59,7 +64,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance}
   margin-top:9px;text-align:center;font-family:var(--cjk);
   font-size:17px;line-height:1.5;color:#C4D3E4;font-weight:400;
 }
-.sp-rule{width:52px;height:1px;background:var(--bronze);opacity:.75;margin:26px auto}
+.sp-rule{width:52px;height:1px;background:var(--fam);opacity:.75;margin:26px auto}
 .sp-quote{text-align:center}
 .sp-quote p{
   margin:0;font-family:var(--serif);font-size:19px;line-height:1.55;color:#fff;
@@ -70,6 +75,11 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance}
 .sp-body{margin-top:26px;display:grid;gap:16px}
 .sp-body p{margin:0;font-size:14.5px;line-height:1.7;color:#9FB4CC}
 .sp-body .zh{display:block;font-family:var(--cjk);font-size:14px;line-height:1.8;color:#8FA6C0;margin-top:5px}
+.sp-motto{
+  margin:7px 0 0;text-align:center;font-size:12.5px;letter-spacing:.06em;
+  color:var(--navy-l);font-weight:400;
+}
+.sp-motto .cn{font-family:var(--cjk);letter-spacing:.02em}
 .sp-go{
   width:100%;margin-top:32px;padding:16px 14px;font-family:var(--sans);
   font-size:15px;font-weight:600;letter-spacing:.02em;line-height:1.4;text-wrap:balance;
@@ -85,14 +95,14 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance}
 .sp-foot .co{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7E96B2}
 .sp-foot .motto{
   margin-top:8px;font-family:var(--serif);font-size:15px;font-style:italic;
-  color:var(--bronze-l);letter-spacing:.02em;
+  color:var(--fam-l);letter-spacing:.02em;
 }
 
 /* ============ masthead ============ */
 .mast{background:var(--sheet);border-bottom:1px solid var(--rule2);padding:20px 18px 0}
 .mast-in{max-width:680px;margin:0 auto}
 .lh{display:block;width:100%;max-width:460px;height:auto;margin:0 auto 4px}
-.mast .dbl{border-top:2px solid var(--navy);border-bottom:1px solid var(--bronze);height:3px;margin:16px 0 0}
+.mast .dbl{border-top:2px solid var(--navy);border-bottom:1px solid var(--fam);height:3px;margin:16px 0 0}
 .mast .tw{text-align:center;padding:18px 0 4px}
 .mast h1{margin:0;font-size:24px;line-height:1.3;color:var(--navy);letter-spacing:-.005em}
 .mast .h1cn{font-family:var(--cjk);font-size:15px;color:var(--ink2);margin-top:8px;font-weight:400}
@@ -105,7 +115,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance}
 .ctl dd{margin:4px 0 0;font-size:13.5px;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:.02em}
 
 /* ============ preamble ============ */
-.pre{background:var(--sheet);border:1px solid var(--rule);border-top:3px solid var(--bronze);padding:20px 20px 18px;margin-top:20px}
+.pre{background:var(--sheet);border:1px solid var(--rule);border-top:3px solid var(--fam);padding:20px 20px 18px;margin-top:20px}
 .pre h2{margin:0;font-size:17px;letter-spacing:.01em}
 .pre .h2cn{font-family:var(--cjk);font-size:14px;color:var(--ink2);margin-top:3px}
 .pre ol{margin:13px 0 0;padding-left:20px}
@@ -118,7 +128,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance}
 
 /* ============ part heading ============ */
 .part{margin:34px 0 14px;padding-bottom:9px;border-bottom:2px solid var(--navy)}
-.part .lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--bronze);font-weight:600}
+.part .lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fam);font-weight:600}
 .part h2{margin:6px 0 0;font-size:21px}
 .part .h2cn{font-family:var(--cjk);font-size:14.5px;color:var(--ink2);margin-top:3px;font-weight:400}
 
@@ -182,7 +192,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance}
 .cl{padding:15px 0;border-top:1px solid var(--rule)}
 .cl:first-child{border-top:0;padding-top:2px}
 .cl-n{
-  font-family:var(--serif);font-size:13.5px;color:var(--bronze);font-weight:600;
+  font-family:var(--serif);font-size:13.5px;color:var(--fam);font-weight:600;
   letter-spacing:.03em;float:left;width:38px;font-variant-numeric:tabular-nums;
 }
 .cl-x{overflow:hidden}
@@ -216,7 +226,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance}
 /* ============ declaration ============ */
 .decl{padding:22px 20px}
 .decl-t{
-  padding:18px 20px;background:var(--sheet2);border:1px solid var(--rule);border-left:3px solid var(--bronze);
+  padding:18px 20px;background:var(--sheet2);border:1px solid var(--rule);border-left:3px solid var(--fam);
 }
 .decl-t p{margin:0;font-family:var(--serif);font-size:16px;line-height:1.75}
 .decl-t .zh{font-family:var(--cjk);font-size:14.5px;line-height:1.8;color:var(--ink2);margin-top:12px;padding-top:12px;border-top:1px solid var(--rule)}
@@ -264,7 +274,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance}
 .shmsg{display:none;margin-top:9px;padding:10px 13px;font-size:13.5px;line-height:1.6;
   border-left:3px solid var(--seal);background:var(--seal-s);color:var(--seal)}
 .shmsg[data-on="1"]{display:block}
-.shmsg[data-warn="1"]{border-left-color:var(--bronze);background:var(--bronze-s);color:var(--bronze)}
+.shmsg[data-warn="1"]{border-left-color:var(--fam);background:var(--fam-s);color:var(--fam)}
 .shimg{margin:12px 0 0;padding:0}
 .shimg figcaption{font-size:13.5px;color:var(--ink2);line-height:1.6;margin-bottom:9px}
 .shimg figcaption .cn{display:block;font-family:var(--cjk);font-size:12.5px;color:var(--ink3);margin-top:2px}
@@ -294,7 +304,7 @@ a.btn{text-decoration:none;text-align:center}
 .rc-s{padding-top:18px}
 .rc-s h3{
   margin:0 0 10px;font-family:var(--sans);font-size:10.5px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--bronze);font-weight:600;
+  text-transform:uppercase;color:var(--fam);font-weight:600;
   padding-bottom:7px;border-bottom:1px solid var(--rule);
 }
 .rc-r{display:flex;justify-content:space-between;gap:14px;padding:5px 0;font-size:14px}
@@ -327,7 +337,7 @@ a.btn{text-decoration:none;text-align:center}
 /* ============ data collection notice ============ */
 .pdpa{
   margin:0 0 4px;padding:13px 15px;background:var(--sheet3);
-  border-left:3px solid var(--bronze);font-size:13.5px;line-height:1.65;color:var(--ink2);
+  border-left:3px solid var(--fam);font-size:13.5px;line-height:1.65;color:var(--ink2);
 }
 .pdpa b{color:var(--ink);font-weight:600}
 .pdpa .zh{display:block;font-family:var(--cjk);font-size:12.5px;color:var(--ink3);margin-top:5px}
@@ -372,7 +382,8 @@ a.btn{text-decoration:none;text-align:center}
 <section class="splash" id="splash" role="dialog" aria-modal="true" aria-labelledby="spH1">
   <div class="sp-in">
     <div class="sp-badge"><img id="spLogo" alt="JIA AN"></div>
-    <div class="sp-eyebrow">Safety starts with me</div>
+    <div class="sp-eyebrow">Safety <span class="cn">安全</span></div>
+    <p class="sp-motto">Safety starts with me<span class="cn"> · 安全，从我做起</span></p>
 
     <h1 class="sp-h1" id="spH1">Welcome to the JIA AN<br>Safety Commitment</h1>
     <div class="sp-h1cn cn">欢迎加入 JIA AN 的安全承诺</div>
